@@ -1,0 +1,413 @@
+/* QuickDeliver Glassmorphism UI Stylesheet - Frosted, Luminous, Modern */
+:root {
+    --bg-main: #0a0f1d;
+    --glass-card: rgba(30, 41, 59, 0.58);
+    --glass-card-hover: rgba(30, 41, 59, 0.72);
+    --glass-header: rgba(15, 23, 42, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.16);
+    --glass-border-highlight: rgba(255, 255, 255, 0.35);
+
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+    
+    --neon-cyan: #06b6d4;
+    --neon-blue: #3b82f6;
+    --neon-emerald: #10b981;
+    --neon-orange: #f97316;
+    --neon-purple: #8b5cf6;
+    --neon-rose: #f43f5e;
+
+    --radius-sm: 10px;
+    --radius-md: 18px;
+    --radius-lg: 24px;
+    --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.40);
+    --shadow-glow-cyan: 0 0 20px rgba(6, 182, 212, 0.35);
+    --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.35);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    background-image: 
+        radial-gradient(circle at 15% 10%, rgba(6, 182, 212, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 85% 20%, rgba(59, 130, 246, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 20% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 85%, rgba(16, 185, 129, 0.14) 0%, transparent 45%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Glass Header */
+header.app-header {
+    background: var(--glass-header);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-glass);
+}
+
+.header-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.brand-icon {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+    color: #ffffff;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    box-shadow: var(--shadow-glow-cyan);
+}
+
+.brand h1 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+}
+
+.brand .badge {
+    font-size: 0.72rem;
+    background: rgba(6, 182, 212, 0.20);
+    border: 1px solid rgba(6, 182, 212, 0.40);
+    color: var(--neon-cyan);
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+}
+
+/* Nav Tabs */
+.nav-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(15, 23, 42, 0.65);
+    padding: 0.3rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+}
+
+.nav-tab {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.nav-tab:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-tab.active {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(59, 130, 246, 0.3));
+    border: 1px solid rgba(6, 182, 212, 0.5);
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(6, 182, 212, 0.25);
+}
+
+/* Session Pill */
+.session-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0.85rem;
+    background: rgba(15, 23, 42, 0.70);
+    border: 1px solid var(--glass-border);
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    backdrop-filter: blur(12px);
+}
+
+.role-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+}
+
+.role-badge.customer { background: rgba(59, 130, 246, 0.2); color: var(--neon-blue); border: 1px solid rgba(59, 130, 246, 0.4); }
+.role-badge.restaurant { background: rgba(249, 115, 22, 0.2); color: var(--neon-orange); border: 1px solid rgba(249, 115, 22, 0.4); }
+.role-badge.admin { background: rgba(139, 92, 246, 0.2); color: var(--neon-purple); border: 1px solid rgba(139, 92, 246, 0.4); }
+.role-badge.rider { background: rgba(16, 185, 129, 0.2); color: var(--neon-emerald); border: 1px solid rgba(16, 185, 129, 0.4); }
+
+/* Main App Layout */
+.app-container {
+    max-width: 1280px;
+    width: 100%;
+    margin: 1.5rem auto;
+    padding: 0 1.5rem;
+    flex: 1;
+}
+
+.view-section {
+    display: none;
+    animation: fadeIn 0.25s ease forwards;
+}
+
+.view-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.section-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.section-subtitle {
+    font-size: 0.9rem;
+    color: var(--neon-cyan);
+    margin-top: 0.2rem;
+}
+
+/* Glass Card */
+.card {
+    background: var(--glass-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 1.35rem;
+    box-shadow: var(--shadow-glass);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+    border-color: var(--glass-border-highlight);
+}
+
+.card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* Grids */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 860px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Buttons */
+.btn {
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--neon-blue), #2563eb);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.6);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--neon-emerald), #059669);
+    color: #030712;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.btn-outline {
+    background: rgba(15, 23, 42, 0.6);
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+}
+
+.btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--glass-border-highlight);
+}
+
+.btn-sm {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    background: rgba(15, 23, 42, 0.7);
+    color: #ffffff;
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.25);
+}
+
+/* Food Menu Cards */
+.food-card-glass {
+    display: flex;
+    gap: 1rem;
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.food-card-glass:hover {
+    border-color: var(--glass-border-highlight);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glass);
+}
+
+.food-card-thumb {
+    width: 90px;
+    height: 90px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.food-card-info {
+    flex: 1;
+}
+
+.food-card-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+.food-card-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 0.2rem 0;
+    line-height: 1.3;
+}
+
+.food-card-price {
+    font-weight: 800;
+    color: var(--neon-cyan);
+    font-size: 1rem;
+}
+
+/* Map Canvas Container */
+.radar-map-wrapper {
+    background: rgba(6, 10, 20, 0.85);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    position: relative;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.7);
+}
+
+canvas#delivery-radar-canvas {
+    width: 100%;
+    height: 320px;
+    display: block;
+    border-radius: 12px;
+}
+
+/* Terminal Console */
+.bfs-console {
+    background: rgba(3, 7, 18, 0.95);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.82rem;
+    color: #e2e8f0;
+    max-height: 260px;
+    overflow-y: auto;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+}

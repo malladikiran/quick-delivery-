@@ -1,0 +1,6 @@
+{
+  "name": "QuickDeliver",
+  "description": "QuickDeliver – Smart Food Delivery and Rider Assignment System with BFS graph routing and ML ETA prediction.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

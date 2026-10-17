@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickDeliver – Smart Food Delivery & BFS Rider Assignment System</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand" onclick="switchTab('customer')">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <h1>QuickDeliver</h1>
+                    <span class="badge">B.Tech ADSA + DBMS + ML</span>
+                </div>
+            </div>
+
+            <!-- Role Tabs -->
+            <nav class="nav-tabs">
+                <button class="nav-tab active" id="tab-customer" onclick="switchTab('customer')">
+                    <i class="fa-solid fa-utensils"></i> Customer
+                </button>
+                <button class="nav-tab" id="tab-restaurant" onclick="switchTab('restaurant')">
+                    <i class="fa-solid fa-store"></i> Restaurant
+                </button>
+                <button class="nav-tab" id="tab-admin" onclick="switchTab('admin')">
+                    <i class="fa-solid fa-diagram-project"></i> Admin (BFS)
+                </button>
+                <button class="nav-tab" id="tab-rider" onclick="switchTab('rider')">
+                    <i class="fa-solid fa-motorcycle"></i> Rider
+                </button>
+                <button class="nav-tab" id="tab-tracking" onclick="switchTab('tracking')">
+                    <i class="fa-solid fa-map-location-dot"></i> Tracking
+                </button>
+            </nav>
+
+            <!-- Quick Persona Switcher -->
+            <div class="session-pill">
+                <i class="fa-solid fa-user-circle"></i>
+                <span id="current-user-label" style="font-weight: 600;">Rahul (Zone Z4)</span>
+                <span class="role-badge customer" id="current-role-badge">CUSTOMER</span>
+                <button class="btn btn-outline btn-sm" onclick="showSwitchPersonaModal()" title="Switch Persona">
+                    <i class="fa-solid fa-repeat"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-container">
+
+        <!-- ================= CUSTOMER VIEW ================= -->
+        <section id="view-customer" class="view-section active">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Order Fresh Food</h2>
+                    <p class="section-subtitle">Select restaurant, customize food items, and track live status</p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <!-- Left Column: Restaurant & Menu -->
+                <div>
+                    <div class="card" style="margin-bottom: 1.25rem;">
+                        <label class="form-label"><i class="fa-solid fa-store"></i> Select Restaurant</label>
+                        <select id="cust-restaurant-select" class="form-control" onchange="loadRestaurantMenu()">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title"><i class="fa-solid fa-bowl-food"></i> Available Menu Items</div>
+                        <div id="cust-menu-container" style="display: flex; flex-direction: column; gap: 0.85rem; margin-top: 1rem;">
+                            <!-- Menu items rendered here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Cart & Orders -->
+                <div>
+                    <div class="card" style="margin-bottom: 1.25rem;">
+                        <div class="card-title"><i class="fa-solid fa-cart-shopping"></i> Your Order Cart</div>
+                        <div id="cust-cart-items" style="min-height: 80px; margin: 1rem 0;">
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Cart is currently empty. Add dishes from the menu.</p>
+                        </div>
+
+                        <div style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fa-solid fa-location-dot"></i> Delivery Zone</label>
+                                <select id="cust-delivery-zone" class="form-control">
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <span style="font-weight: 700; font-size: 1.1rem;">Total Amount:</span>
+                                <span id="cust-cart-total" style="font-weight: 800; font-size: 1.3rem; color: var(--primary-blue);">₹0.00</span>
+                            </div>
+
+                            <button id="cust-place-order-btn" class="btn btn-primary" style="width: 100%;" onclick="placeCustomerOrder()">
+                                <i class="fa-solid fa-check"></i> Place Food Order
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> My Recent Orders</div>
+                        <div id="cust-orders-list" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <!-- Orders loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= RESTAURANT VIEW ================= -->
+        <section id="view-restaurant" class="view-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Restaurant Kitchen Dashboard</h2>
+                    <p class="section-subtitle">Manage kitchen workflow: Confirm orders, prepare food, and notify riders</p>
+                </div>
+                <div>
+                    <select id="rest-select" class="form-control" onchange="loadRestaurantOrders()">
+                        <!-- Restaurants loaded here -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-fire-burner"></i> Live Kitchen Orders</div>
+                <div id="rest-orders-table" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <!-- Kitchen orders rendered here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ADMIN DISPATCH & BFS VIEW ================= -->
+        <section id="view-admin" class="view-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">ADSA BFS Dispatch & Delivery Zone Network</h2>
+                    <p class="section-subtitle">Graph theory representation of zones and Breadth-First Search rider assignment</p>
+                </div>
+                <div>
+                    <button class="btn btn-outline" onclick="loadAdminDashboard()">
+                        <i class="fa-solid fa-rotate"></i> Refresh Network
+                    </button>
+                </div>
+            </div>
+
+            <!-- Visual Graph of Zones -->
+            <div class="graph-container" style="margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="card-title" style="margin: 0;">
+                        <i class="fa-solid fa-circle-nodes"></i> City Delivery Zones Graph: G = (V, E)
+                    </div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">
+                        Unweighted Undirected Graph with 6 Zones &amp; 7 Edges
+                    </span>
+                </div>
+
+                <div class="zone-grid" id="admin-zone-grid">
+                    <!-- Zones dynamically populated -->
+                </div>
+            </div>
+
+            <!-- Ready Orders & BFS Dispatch Runner -->
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fa-solid fa-bell"></i> Orders Awaiting Rider Dispatch (READY_FOR_PICKUP)
+                    </div>
+                    <div id="admin-ready-orders" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.85rem;">
+                        <!-- Ready orders here -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fa-solid fa-terminal"></i> BFS Execution Engine Console
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+                        Displays level-by-level queue traversal and shortest-hop rider discovery.
+                    </p>
+                    <div id="admin-bfs-console" class="bfs-trace-box">
+                        <div class="trace-line">Ready for BFS execution. Click "Run BFS Assignment" on any ready order.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= RIDER VIEW ================= -->
+        <section id="view-rider" class="view-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Delivery Partner Portal</h2>
+                    <p class="section-subtitle">Accept assigned pickups, update en-route progress, and complete deliveries</p>
+                </div>
+                <div>
+                    <select id="rider-select" class="form-control" onchange="loadRiderOrders()">
+                        <!-- Riders list -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fa-solid fa-route"></i> My Assigned Deliveries</div>
+                <div id="rider-orders-list" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <!-- Rider assigned orders -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TRACKING VIEW ================= -->
+        <section id="view-tracking" class="view-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Live Order &amp; Delivery Tracking</h2>
+                    <p class="section-subtitle">Real-time status updates and Python Regression ML ETA prediction</p>
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <input type="number" id="tracking-input-id" class="form-control" placeholder="Order ID (e.g. 1)" style="width: 140px;">
+                    <button class="btn btn-primary" onclick="trackOrderManual()">
+                        <i class="fa-solid fa-search"></i> Track
+                    </button>
+                </div>
+            </div>
+
+            <div id="tracking-content">
+                <div class="card" style="text-align: center; padding: 3rem 1rem;">
+                    <i class="fa-solid fa-map-location-dot" style="font-size: 3rem; color: var(--primary-blue); margin-bottom: 1rem;"></i>
+                    <h3>Track any Food Order</h3>
+                    <p style="color: var(--text-muted); margin-top: 0.5rem;">Enter an Order ID above or click "Track Live" from the Customer or Admin dashboard.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal for Persona Switching -->
+    <div id="persona-modal" style="display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.6); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="card" style="max-width: 450px; width: 90%;">
+            <div class="section-header" style="margin-bottom: 1rem;">
+                <div class="card-title"><i class="fa-solid fa-users"></i> Switch User Persona</div>
+                <button class="btn btn-outline btn-sm" onclick="closeSwitchPersonaModal()"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+                Quickly test any role for project presentation and viva evaluation:
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                <button class="btn btn-outline" style="justify-content: flex-start;" onclick="setPersona('rahul', 'CUSTOMER', 1, 'Rahul Sharma (Z4)', 'Z4')">
+                    <span class="role-badge customer">Customer</span> Rahul Sharma (Delivery Zone Z4)
+                </button>
+                <button class="btn btn-outline" style="justify-content: flex-start;" onclick="setPersona('spicekitchen', 'RESTAURANT', 1, 'The Spice Kitchen (Z1)', 'Z1')">
+                    <span class="role-badge restaurant">Restaurant</span> The Spice Kitchen (Zone Z1)
+                </button>
+                <button class="btn btn-outline" style="justify-content: flex-start;" onclick="setPersona('admin', 'ADMIN', 1, 'System Administrator', 'ALL')">
+                    <span class="role-badge admin">Admin</span> System Administrator (BFS Dispatcher)
+                </button>
+                <button class="btn btn-outline" style="justify-content: flex-start;" onclick="setPersona('rider_karan', 'RIDER', 1, 'Karan Verma (Z2)', 'Z2')">
+                    <span class="role-badge rider">Rider</span> Karan Verma (Zone Z2, Bike)
+                </button>
+                <button class="btn btn-outline" style="justify-content: flex-start;" onclick="setPersona('rider_anita', 'RIDER', 2, 'Anita Roy (Z4)', 'Z4')">
+                    <span class="role-badge rider">Rider</span> Anita Roy (Zone Z4, Scooter)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/app.js"></script>
+</body>
+</html>
